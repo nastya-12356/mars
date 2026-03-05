@@ -42,15 +42,15 @@ def promotion():
                   <h1>Жди нас, Марс!</h1>
                   <img src="{url_for('static', filename='img/image.gif')}"
                     alt="здесь должна была быть картинка, но не нашлась">
-                    <div class="alert alert-secondary" role="alert">
+                    <div class="alert alert-dark" role="alert">
                         Человечество вырастает из детства.</div>
                     <div class="alert alert-success" role="alert">
                         Человечеству мала одна планета.</div>
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-secondary" role="alert">
                         Мы сделаем обитаемыми безжизненные пока планеты.</div>
                     <div class="alert alert-warning" role="alert">
                         И начнем с Марса!</div>
-                    <div class="alert alert-dark" role="alert">
+                    <div class="alert alert-danger" role="alert">
                         Присоединяйся!</div>
 
            </body>
