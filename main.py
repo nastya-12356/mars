@@ -1,5 +1,5 @@
 from flask import Flask, url_for, request, render_template
-
+import random
 app = Flask(__name__)
 
 
@@ -278,6 +278,43 @@ def marker(marker):
             'Штурман',
             'Пилот дронов']
     return render_template('marker.html', marker=marker, prof=prof)
+
+
+@app.route('/answer')
+@app.route('/auto_answer')
+def answer():
+    pretedents = [
+        {
+            'title': 'Анкета',
+            'surname': 'Васильев',
+            'name': 'Дима',
+            'education': 'Основное',
+            'profession': 'Программист',
+            'sex': 'Муж',
+            'motivation': "Всегда мечтал об этом!",
+            'ready': "Да"
+        }, {
+            'title': 'Анкета',
+            'surname': 'Никитин',
+            'name': 'Александр',
+            'education': 'Высшее',
+            'profession': 'Учитель',
+            'sex': 'Муж',
+            'motivation': "Заставляют",
+            'ready': "Хочет домой"
+        }, {
+            'title': 'Анкета',
+            'surname': 'Ластухина',
+            'name': 'Настя',
+            'education': 'Основное',
+            'profession': 'Врач',
+            'sex': 'Жен',
+            'motivation': "Всегда мечтал об этом!",
+            'ready': "Да"
+        }
+    ]
+    answer = random.choice(pretedents)
+    return render_template('answer.html', **answer)
 
 
 if __name__ == '__main__':
