@@ -1,28 +1,9 @@
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, render_template
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def main():
-    return "Отбор астронавтов"
-
-
-@app.route('/image_mars')
-def image():
-    return f'''<!doctype html>
-                <html lang="en">
-                  <head>
-                    <meta charset="utf-8">
-                    <title>Отбор астронавтов</title>
-                  </head>
-                  <body>
-                  <h1>Жди нас, Марс!</h1>
-                  <img src="{url_for('static', filename='img/image.gif')}"
-           alt="здесь должна была быть картинка, но не нашлась">
-           <div>Вот она какая, красная планета.</div>
-           </body>
-            </html>'''
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 @app.route('/promotion_image')
@@ -55,6 +36,12 @@ def promotion():
 
            </body>
             </html>'''
+
+
+@app.route('/<title>')
+@app.route('/index/<title>')
+def index(title):
+    return render_template('index.html', title=title)
 
 
 @app.route('/astronaut_selection', methods=['POST', 'GET'])
@@ -237,6 +224,34 @@ def form_sample():
         print('accept-', request.form['accept'])
         
         return "Форма отправлена"
+
+
+@app.route('/image_mars')
+def image():
+    return f'''<!doctype html>
+                <html lang="en">
+                  <head>
+                    <meta charset="utf-8">
+                    <title>Привет, Марс!</title>
+                  </head>
+                  <body>
+                  <h1>Жди нас, Марс!</h1>
+                  <img src="{url_for('static', filename='img/image.gif')}"
+           alt="здесь должна была быть картинка, но не нашлась">
+           <div>Вот она какая, красная планета.</div>
+           </body>
+            </html>'''
+
+
+@app.route('/promotion')
+def countdown():
+    countdown_list = []
+    countdown_list.append('Человечество вырастает из детства.')
+    countdown_list.append('Человечеству мала одна планета.')
+    countdown_list.append('Мы сделаем обитаемыми безжизненные пока планеты.')
+    countdown_list.append('И начнем с Марса!')
+    countdown_list.append('Присоединяйся!')
+    return '</br>'.join(countdown_list)
 
 
 if __name__ == '__main__':
