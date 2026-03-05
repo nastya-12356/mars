@@ -254,5 +254,10 @@ def countdown():
     return '</br>'.join(countdown_list)
 
 
+@app.route('/training/<prof>')
+def prof(prof):
+    return render_template('training.html', prof=prof)
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
