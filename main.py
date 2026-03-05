@@ -222,7 +222,7 @@ def form_sample():
         print('about-', request.form['about'])
         print('file-', request.form['file'])
         print('accept-', request.form['accept'])
-        
+
         return "Форма отправлена"
 
 
@@ -257,6 +257,27 @@ def countdown():
 @app.route('/training/<prof>')
 def prof(prof):
     return render_template('training.html', prof=prof)
+
+
+@app.route('/list_prof/<marker>')
+def marker(marker):
+    prof = ['Инженер-исследователь',
+            'Пилот',
+            'Строитель',
+            'Экзобиолог',
+            'Врач',
+            'Инженер по терраформированию',
+            'Климатолог',
+            'Специалист по радиационной защите',
+            'Астрогеолог',
+            'Гляциолог',
+            'Инженер жизнеобеспечения',
+            'Метеоролог',
+            'Оператор марсохода',
+            'Киберинженер',
+            'Штурман',
+            'Пилот дронов']
+    return render_template('marker.html', marker=marker, prof=prof)
 
 
 if __name__ == '__main__':

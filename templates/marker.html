@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="form-group" aling="center">
+    <h2>Список профессий</h2>
+ {% if 'ol' == marker%}
+        
+<ol>
+    {% for elem in prof %}
+    <li>{{elem}}</li>
+{% endfor %}
+</ol>
+
+ {% elif 'ul' == marker%}
+        
+<ul>
+    {% for elem in prof %}
+    <li>{{elem}}</li>
+{% endfor %}
+</ul>
+
+
+ {% else %}
+ <h5>Параметр задан неверно</h5>
+
+
+ {% endif %}
+ </div>
+
+
+{% endblock %}
