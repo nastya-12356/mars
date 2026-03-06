@@ -1,72 +1,38 @@
-from flask import Flask, url_for
+import arcade
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def main():
-    return "Миссия Колонизация Марса"
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+TITLE = "Texture"
 
 
-@app.route('/image_mars')
-def image():
-    return f'''<!doctype html>
-                <html lang="en">
-                  <head>
-                    <meta charset="utf-8">
-                    <title>Привет, Марс!</title>
-                  </head>
-                  <body>
-                  <h1>Жди нас, Марс!</h1>
-                  <img src="{url_for('static', filename='img/image.gif')}"
-           alt="здесь должна была быть картинка, но не нашлась">
-           <div>Вот она какая, красная планета.</div>
-           </body>
-            </html>'''
+class MyGame(arcade.Window):
+    def __init__(self, width, height, title, filename):
+        super().__init__(width, height, title)
+        self.filename = filename
+        self.background = None
+
+    def setup(self):
+        # Строка должна быть строго ВНУТРИ метода setup с отступом!
+        # Здесь self существует и указывает на текущий объект игры.
+        file_path = f"images/backgrounds/{self.filename}"
+        self.background = arcade.load_texture(file_path)
+
+    def on_draw(self):
+        self.clear()
+        # Самый универсальный способ для новых версий:
+        arcade.draw_texture_rect(
+            texture=self.background,
+            rect=arcade.LRBT(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
+        )
 
 
-@app.route('/promotion_image')
-def promotion():
-    return f'''<!doctype html>
-                <html lang="en">
-                  <head>
-                    <meta charset="utf-8">
-                    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
-                    <link rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                    crossorigin="anonymous">
-                    <title>Колонизация</title>
-                  </head>
-                  <body>
-                  <h1>Жди нас, Марс!</h1>
-                  <img src="{url_for('static', filename='img/image.gif')}"
-                    alt="здесь должна была быть картинка, но не нашлась">
-                    <div class="alert alert-dark" role="alert">
-                        Человечество вырастает из детства.</div>
-                    <div class="alert alert-success" role="alert">
-                        Человечеству мала одна планета.</div>
-                    <div class="alert alert-secondary" role="alert">
-                        Мы сделаем обитаемыми безжизненные пока планеты.</div>
-                    <div class="alert alert-warning" role="alert">
-                        И начнем с Марса!</div>
-                    <div class="alert alert-danger" role="alert">
-                        Присоединяйся!</div>
-
-           </body>
-            </html>'''
 
 
-@app.route('/promotion')
-def countdown():
-    countdown_list = []
-    countdown_list.append('Человечество вырастает из детства.')
-    countdown_list.append('Человечеству мала одна планета.')
-    countdown_list.append('Мы сделаем обитаемыми безжизненные пока планеты.')
-    countdown_list.append('И начнем с Марса!')
-    countdown_list.append('Присоединяйся!')
-    return '</br>'.join(countdown_list)
+def setup_game(width=800, height=600, title="Texture", filename='fon1.png'):
+    game = MyGame(width, height, title, filename)
+    game.setup()
+    return game
 
 
-if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+if __name__ == "__main__":
+    setup_game()
+    arcade.run()
