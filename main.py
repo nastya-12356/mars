@@ -317,8 +317,8 @@ def answer():
     return render_template('answer.html', **answer)
 
 
-@app.route('/choice/<planet_name>')
-def planets(planet_name):
+@app.route('/results/<nickname>/<int:level>/<float:rating>')
+def planets(nickname, level, rating):
     return f'''<!doctype html>
                 <html lang="en">
                   <head>
@@ -328,25 +328,21 @@ def planets(planet_name):
                     href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
                     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
                     crossorigin="anonymous">
-                    <title>Варианты выбора</title>
+                    <title>Результаты</title>
                   </head>
                   <body>
-                    <h1>Мое предложение: {planet_name}</h1>
-                    <h2><div class="alert alert" role="alert">
-                      Эта планета близка к земле;
-                    </div></h2>
-                    <h2><div class="alert alert-success" role="alert">
-  На ней много необходимых ресурсов;
-</div></h2>
-<h2><div class="alert alert-secondary" role="alert">
-  На ней есть вода и атмосфера;
-</div></h2>
+                    <h1>Результаты отбора</h1>
+                    <h2>Претендента на участии в миссии {nickname}</h2>
+                    <h3><div class="alert alert-success" role="alert">
+  Поздравляем! Ваш рейтинг после {level} этапа отбора
+</div></h3>
+<h3><div class="alert alert" role="alert">
+  составляет {rating}!
+</div></h3>
 <h2><div class="alert alert-warning" role="alert">
-  На ней есть небольшое магнитное поле;
+  Желаем удачи!
 </div></h2>
-<h2><div class="alert alert-danger" role="alert">
-  Наконец, она просто красива!
-</div></h2>
+
                   </body>
                 </html>'''
 
