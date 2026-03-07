@@ -1,5 +1,7 @@
-from flask import Flask, url_for, request, render_template
 import random
+
+from flask import Flask, url_for, request, render_template
+
 app = Flask(__name__)
 
 
@@ -346,6 +348,42 @@ def planets(nickname, level, rating):
                   </body>
                 </html>'''
 
+
+@app.route('/load_photo', methods=['POST', 'GET'])
+def load_photo():
+    if request.method == 'GET':
+        return f'''<!doctype html>
+                        <html lang="en">
+                          <head>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                            <link rel="stylesheet"
+                            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                            crossorigin="anonymous">
+                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
+                            <title>Отбор астронавтов</title>
+                          </head>
+                          <body>
+                            <h1 style="text-align: center;">Загрузка фотографии</h1>
+                            <h3 style="text-align: center;">для участии в миссии</h3>
+                            <div>
+                                <form class="login_form" method="post">
+                                    <div class="form-group">
+                                        <label for="photo">Приложите фотографию</label>
+                                        <h4> </h4>
+                                        <input type="file" class="form-control-file" id="photo" name="file">
+                                        <h4> </h4>
+                                        <img src="/static/img/MARS-6.gif" alt="здесь должна была быть картинка, но не нашлась">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Отправить</button>
+                                </form>
+                            </div>
+                          </body>
+                        </html>'''
+    elif request.method == 'POST':
+        print(request.form['file'])
+        return "Форма отправлена"
 
 
 if __name__ == '__main__':
