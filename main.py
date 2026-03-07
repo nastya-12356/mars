@@ -1,11 +1,24 @@
 import random
 
-from flask import Flask, url_for, request, render_template
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
+from flask import Flask, url_for, request, render_template, redirect
 
 app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Id астронавта', validators=[DataRequired()])
+    password = PasswordField('Пароль астронавта', validators=[DataRequired()])
+    capitan = StringField('Id капитана', validators=[DataRequired()])
+    password_capitan = PasswordField('Пароль капитана', validators=[DataRequired()])
+
+    submit = SubmitField('Доступ')
 
 
 @app.route('/promotion_image')
@@ -384,6 +397,62 @@ def load_photo():
     elif request.method == 'POST':
         print(request.form['file'])
         return "Форма отправлена"
+
+
+@app.route('/carousel')
+def carousel():
+    return f'''<!doctype html>
+                <html lang="en">
+                  <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                    <link rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                    crossorigin="anonymous">
+                    <title>Пейзажи Марса</title>
+                  </head>
+                  <body>
+                    <h1 style="text-align: center;">Пейзажи Марса</h1>
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{url_for('static', filename='mars1.gif')}"
+           alt="здесь должна была быть картинка, но не нашлась" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="{url_for('static', filename='mars2.gif')}"
+           alt="здесь должна была быть картинка, но не нашлась" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="{url_for('static', filename='mars3.gif')}"
+           alt="здесь должна была быть картинка, но не нашлась" class="d-block w-100">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</div>
+                  </body>
+                </html>'''
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect('/success')
+    return render_template('login.html', title='Аварийный доступ', form=form)
 
 
 if __name__ == '__main__':
